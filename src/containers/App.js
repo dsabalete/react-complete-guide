@@ -4,7 +4,7 @@ import classes from './App.module.scss';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
 import withClass from '../hoc/withClass'
-import Aux from '../hoc/Aux'
+import AuxWrapper from '../hoc/AuxWrapper'
 import AuthContext from '../context/auth-context'
 
 class App extends Component {
@@ -101,7 +101,7 @@ class App extends Component {
     }
 
     return (
-      <Aux>
+      <AuxWrapper>
         <button
           onClick={() => {
             this.setState({ showCockpit: false })
@@ -124,7 +124,7 @@ class App extends Component {
           ) : null}
           {persons}
         </AuthContext.Provider>
-      </Aux>
+      </AuxWrapper>
     )
   }
 }

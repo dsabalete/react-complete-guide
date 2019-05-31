@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Aux from '../../../hoc/Aux'
+import AuxWrapper from '../../../hoc/AuxWrapper'
 import withClass from '../../../hoc/withClass'
 import classes from './Person.module.scss'
 
@@ -19,7 +19,7 @@ class Person extends Component {
     render() {
         console.log('[Person.js] rendering...')
         return (
-            <Aux>
+            <AuxWrapper>
                 {this.props.isAuth ? <p>Authenticated!</p> : <p>Please log in</p>}
                 <p onClick={this.props.click}>
                     I'm a {this.props.name} and I am {this.props.age} years old!
@@ -33,7 +33,7 @@ class Person extends Component {
                     onChange={this.props.changed}
                     value={this.props.name}
                 />
-            </Aux>
+            </AuxWrapper>
         )
     }
 }
