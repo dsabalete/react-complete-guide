@@ -18,8 +18,11 @@ class App extends Component {
       { id: 'asdf', name: 'Manu', age: 29 },
       { id: 'zxcv', name: 'Stephanie', age: 26 }
     ],
-    otherProps: 'other props',
-    showPersons: false
+    otherState: 'some other value',
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0,
+    authenticated: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -47,29 +50,38 @@ class App extends Component {
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
-    });
+    })
 
     const person = {
       ...this.state.persons[personIndex]
-    };
+    }
 
-    person.name = event.target.value;
+    person.name = event.target.value
 
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
+    const persons = [...this.state.persons]
+    persons[personIndex] = person
 
-    this.setState({ persons: persons });
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    })
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = [...this.state.persons];
+    const persons = [...this.state.persons]
     persons.splice(personIndex, 1)
-    this.setState({ persons: persons });
+    this.setState({ persons: persons })
   }
 
   togglePersonsHandler = () => {
-    const doesShow = this.state.showPersons;
+    const doesShow = this.state.showPersons
     this.setState({ showPersons: !doesShow })
+  }
+
+  loginHandler = () => {
+    this.setState({ authenticated: true })
   }
 
   render() {
@@ -77,25 +89,37 @@ class App extends Component {
     let persons = null;
 
     if (this.state.showPersons) {
-      persons = <Persons
-        persons={this.state.persons}
-        clicked={this.deletePersonHandler}
-        changed={this.nameChangedHandler}
-      />
+      persons = (
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+          isAuthenticated={this.state.authenticated}
+        />
+      )
     }
 
     return (
       <Aux>
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler}
-        />
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false })
+          }}>
+          Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
         {persons}
       </Aux>
     )
   }
 }
 
-export default withClass(App, classes.App);
+export default withClass(App, classes.App)
