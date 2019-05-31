@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 
 import classes from './Cockpit.module.scss'
+import AuthContext from '../../context/auth-context'
 
 const Cockpit = props => {
     const toggleBtnRef = useRef(null)
+    const authContext = useContext(AuthContext)
+
+    console.log(authContext.authenticated)
 
     useEffect(() => {
         console.log('[Cockpit.js] useEffect')
@@ -15,25 +19,25 @@ const Cockpit = props => {
         return () => {
             console.log('[Cockpit.js] cleanup work in useEffect')
         }
-    }, []);
+    }, [])
 
     useEffect(() => {
         console.log('[Cockpit.js] 2nd useEffect')
         return () => {
             console.log('[Cockpit.js] cleanup work in 2nd useEffect')
         }
-    });
+    })
 
-    const assignedClasses = [];
-    let btnClass = '';
+    const assignedClasses = []
+    let btnClass = ''
     if (props.showPersons) {
-        btnClass = classes.Red;
+        btnClass = classes.Red
 
         if (props.persons.length <= 2) {
-            assignedClasses.push(classes.red);
+            assignedClasses.push(classes.red)
         }
         if (props.persons.length <= 1) {
-            assignedClasses.push(classes.bold);
+            assignedClasses.push(classes.bold)
         }
     }
 
@@ -41,10 +45,14 @@ const Cockpit = props => {
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
             <p className={assignedClasses.join(' ')}>This is really working!</p>
-            <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
+            <button
+                ref={toggleBtnRef}
+                className={btnClass}
+                onClick={props.clicked}
+            >
                 Toggle Persons
             </button>
-            <button onClick={props.login}>Log in</button>
+            <button onClick={authContext.login}>Log in</button>
         </div>
     )
 }

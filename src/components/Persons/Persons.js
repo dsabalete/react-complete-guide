@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import Person from './Person/Person'
 
 class Persons extends Component {
@@ -17,12 +18,12 @@ class Persons extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[Persons.js] shouldComponentUpdate')
-        return true;
+        return true
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate')
-        return { message: 'Snapshot!' };
+        return { message: 'Snapshot!' }
     }
 
     // componentWillUpdate() {
@@ -35,7 +36,7 @@ class Persons extends Component {
     }
 
     render() {
-        console.log('[Persons.js] rendering...');
+        console.log('[Persons.js] rendering...')
         return this.props.persons.map((person, index) => {
             return (
                 <Person
@@ -46,7 +47,6 @@ class Persons extends Component {
                     changed={event => this.props.changed(event, person.id)}
                     isAuth={this.props.isAuthenticated}
                 />
-
             )
         })
     }
