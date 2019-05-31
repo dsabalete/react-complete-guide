@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import classes from './Cockpit.module.scss'
 
-const cockpit = (props) => {
+const Cockpit = (props) => {
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect')
+    });
+
     const assignedClasses = [];
     let btnClass = '';
     if (props.showPersons) {
         btnClass = classes.Red;
+
         if (props.persons.length <= 2) {
             assignedClasses.push(classes.red);
         }
@@ -26,4 +31,4 @@ const cockpit = (props) => {
     )
 }
 
-export default cockpit
+export default Cockpit
